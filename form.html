@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Form</title>
+        <link rel="stylesheet" href="style.css" type="text/css">
+    </head>
+    <body>
+        <form novalidate>
+            <div>
+                <label for="email">Email</label>
+                <input class="form-field" id="email" type="email" name="email" required>
+            </div>
+            <div>
+                <label for="email">Email Confirmation</label>
+                <input class="form-field" id="email-confirm" type="email" name="email-confirm" required>
+            </div>
+            <div>
+                <label for="country">Country</label>
+                <select class="form-field" id="country" name="country">
+                    <option value="">Select one</option>
+                </select>
+            </div>
+            <div>
+                <label for="zipcode">Zip Code</label>
+                <input class="form-field" id="zipcode" type="number" name="zipcode">
+            </div>
+            <div>
+                <label for="password">Password</label>
+                <input class="form-field" id="password" type="password" name="password" required>
+            </div>
+            <div>
+                <label for="password">Password Confirmation</label>
+                <input class="form-field" id="password-confirm" type="password" name="password-confirm" required>
+            </div>
+            <div>
+                <input id="submit-btn" type="submit">
+            </div>
+        </form>
+        <script type="text/javascript" src="script.js"></script>
+    </body>
+</html>
