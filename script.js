@@ -1,16 +1,18 @@
 let allFields = document.querySelectorAll(".form-field");
 let emailField = document.querySelectorAll("input[type=\"email\"]");
 let submitBtn = document.getElementById("submit-btn");
+let form = document.querySelector("form");
 
-submitBtn.addEventListener("submit", ()=> {
+form.addEventListener("submit", ()=> {
     event.preventDefault();
-    allFields.forEach( field => {
-        console.log(field.checkValidity());
-        return field.checkValidity();
-    });
-
-    console.log("submitted!");
+    if (!validateForm()) {
+        return false;
+    } else {
+    
+        alert("Submitted!");
+    }
 });
+
 
 allFields.forEach( field => {
     field.addEventListener("blur", () => {
@@ -21,18 +23,27 @@ allFields.forEach( field => {
     });
 });
 
+function validateForm(){
+    let arr = [];
+
+    allFields.forEach( field => {
+        arr.push(validateRequired(field));
+    });
+
+    return arr.includes(false) ? false : true;
+}
+
 function validateRequired(field){
     
     if(field.validity.valueMissing) {
         let msg = "This field is required!";
         hasError(field, msg);
+        return false;
+
     } else {
         removeError(field);
+        return true;
     }
-}
-
-function validateEmail(field){
-
 }
 
 function hasError(field, msg){
@@ -43,7 +54,9 @@ function hasError(field, msg){
     span.classList.add("error-msg");
     span.innerHTML = msg;
 
-    field.parentNode.appendChild(span);
+    if (!field.nextElementSibling) {
+        field.parentNode.appendChild(span);
+    }
 }
 
 function removeError(field){
