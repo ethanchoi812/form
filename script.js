@@ -1,5 +1,6 @@
 let allFields = document.querySelectorAll(".form-field");
 let emailFields = document.querySelectorAll("input[type=\"email\"]");
+let passwordFields = document.querySelectorAll("input[type=\"password\"]");
 let submitBtn = document.getElementById("submit-btn");
 let form = document.querySelector("form");
 
@@ -8,7 +9,6 @@ form.addEventListener("submit", ()=> {
     if (!validateForm()) {
         return false;
     } else {
-    
         alert("Submitted!");
     }
 });
@@ -18,6 +18,24 @@ allFields.forEach( field => {
     field.addEventListener("blur", () => {
         validateRequired(field);
         validateEmail(field);
+    });
+    field.addEventListener("focus", () => {
+        removeError(field);
+    });
+});
+
+emailFields.forEach( field => {
+    field.addEventListener("blur", () => {
+        validateSameValue(...emailFields);
+    });
+    field.addEventListener("focus", () => {
+        removeError(field);
+    });
+});
+
+passwordFields.forEach( field => {
+    field.addEventListener("blur", () => {
+        validateSameValue(...passwordFields);
     });
     field.addEventListener("focus", () => {
         removeError(field);
@@ -34,6 +52,9 @@ function validateForm(){
     emailFields.forEach( field => {
         arr.push(validateEmail(field));
     })
+
+    arr.push(validateSameValue(...emailFields));
+    arr.push(validateSameValue(...passwordFields));
 
     return arr.includes(false) ? false : true;
 }
@@ -63,6 +84,17 @@ function validateEmail(field){
             removeError(field);
             return true;
         }
+    }
+}
+
+function validateSameValue(field, confirmField){
+    if (field.value !== confirmField.value) {
+        let msg = "The field values are different";
+            hasError(confirmField, msg);
+            return false;
+        } else {
+            removeError(field);
+            return true;
     }
 }
 
