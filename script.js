@@ -1,5 +1,5 @@
 let allFields = document.querySelectorAll(".form-field");
-let emailField = document.querySelectorAll("input[type=\"email\"]");
+let emailFields = document.querySelectorAll("input[type=\"email\"]");
 let submitBtn = document.getElementById("submit-btn");
 let form = document.querySelector("form");
 
@@ -17,6 +17,7 @@ form.addEventListener("submit", ()=> {
 allFields.forEach( field => {
     field.addEventListener("blur", () => {
         validateRequired(field);
+        validateEmail(field);
     });
     field.addEventListener("focus", () => {
         removeError(field);
@@ -29,6 +30,10 @@ function validateForm(){
     allFields.forEach( field => {
         arr.push(validateRequired(field));
     });
+
+    emailFields.forEach( field => {
+        arr.push(validateEmail(field));
+    })
 
     return arr.includes(false) ? false : true;
 }
@@ -43,6 +48,21 @@ function validateRequired(field){
     } else {
         removeError(field);
         return true;
+    }
+}
+
+function validateEmail(field){
+    
+    if(field.value !== ""){
+        if(field.validity.typeMismatch) {
+            let msg = "Please enter a valid email address";
+            hasError(field, msg);
+            return false;
+
+        } else {
+            removeError(field);
+            return true;
+        }
     }
 }
 
